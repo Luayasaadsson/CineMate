@@ -38,33 +38,44 @@ onMounted(() => {
 
   <div v-if="isLoading">Loading movie details...</div>
 
-  <div v-else-if="movie">
-    <h1>{{ movie.Title }}</h1>
-    <img :src="movie.Poster" :alt="movie.Title" />
-    <p><strong>Year:</strong> {{ movie.Year }}</p>
-    <p><strong>Genre:</strong> {{ movie.Genre }}</p>
-    <p><strong>Plot:</strong> {{ movie.Plot }}</p>
+  <div v-else-if="movie" class="movie-details">
+    <div class="movie-poster">
+      <img :src="movie.Poster" :alt="movie.Title" />
+    </div>
+    <div class="movie-info">
+      <h1>{{ movie.Title }}</h1>
+      <p><strong>Year:</strong> {{ movie.Year }}</p>
+      <p><strong>Genre:</strong> {{ movie.Genre }}</p>
+      <p><strong>Plot:</strong> {{ movie.Plot }}</p>
+    </div>
   </div>
 
   <button @click="$router.push('/')" class="home-button">Show All Movies</button>
 </template>
 
 <style scoped>
-h1 {
-  text-align: center;
+.movie-details {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem;
+  padding-left: 10%;
+}
+
+.movie-poster img {
+  max-width: 500px;
+  border-radius: 8px;
+}
+
+.movie-info h1 {
+  font-size: 2rem;
   margin-bottom: 1rem;
 }
 
-img {
-  display: block;
-  margin: 1rem auto;
-  max-width: 300px;
-}
-
-p {
-  text-align: center;
-  font-size: 1rem;
+.movie-info p {
+  font-size: 1.8rem;
   margin: 0.5rem 0;
+  max-width: 60rem;
 }
 
 .home-button {
@@ -82,14 +93,25 @@ p {
   background-color: #1a242f;
 }
 
-.error-banner {
-  background-color: #ffdddd;
-  color: #d8000c;
-  border: 1px solid #d8000c;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  border-radius: 4px;
-  font-weight: bold;
+@media (max-width: 980px) {
+  .movie-details {
+    flex-direction: column;
+    align-items: center;
+    padding: 0%;
+  }
+
+  .movie-poster img {
+    max-width: 300px;
+  }
+
+  .movie-info h1 {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .movie-info p {
+    text-align: center;
+    font-size: 1rem;
+  }
 }
 </style>

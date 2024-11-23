@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { defineProps } from 'vue'
-
 defineProps<{
   poster: string
   title: string
@@ -19,12 +17,14 @@ defineProps<{
 
 <style scoped>
 .movie-card {
-  text-align: center;
-  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  margin-bottom: 1rem;
 }
 
 .movie-card:hover {
@@ -32,17 +32,29 @@ defineProps<{
 }
 
 .movie-card img {
-  max-width: 100%;
-  border-radius: 4px;
+  border-radius: 8px;
+  margin: auto;
+  width: 60%;
 }
 
 .movie-card h2 {
   font-size: 1.2rem;
   margin: 0.5rem 0;
-  color: #333;
+  color: var(--vt-c-white);
+  text-decoration: underline;
 }
 
 .movie-card p {
-  color: #555;
+  color: var(--vt-c-white);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .movie-card h2 {
+    font-size: 0.8rem;
+  }
+  .movie-card p {
+    font-size: 0.7rem;
+  }
 }
 </style>

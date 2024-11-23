@@ -23,7 +23,12 @@ const handleSearch = () => {
 
 <template>
   <div class="search-bar">
-    <input type="text" v-model="localQuery" placeholder="Enter movie title..." />
+    <input
+      type="text"
+      v-model="localQuery"
+      placeholder="Let's find some movies!"
+      @keydown.enter="handleSearch"
+    />
     <button @click="handleSearch">Search</button>
   </div>
 </template>
@@ -36,19 +41,20 @@ const handleSearch = () => {
 }
 
 .search-bar input {
-  width: 300px;
+  width: 800px;
   padding: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 0.5rem;
+  border-right: none;
+  border-radius: 6px 0 0 4px;
 }
 
 .search-bar button {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
   background-color: #2c3e50;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-left: none;
+  border-radius: 0 6px 4px 0;
   cursor: pointer;
 }
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import SearchBar from '../components/SearchBar.vue'
 import MovieCard from '../components/MovieCard.vue'
 import ErrorBanner from '../components/ErrorBanner.vue'
@@ -9,23 +9,40 @@ import type { Movie } from '../types/Movie'
 const searchQuery = ref('')
 const movies = ref<Movie[]>([])
 const movieCache = ref(new Map<string, Movie[]>())
+const currentPage = ref(1)
+const totalPages = ref(1)
+
 const isLoading = ref(true)
 const error = ref<string | null>(null)
 
-const loadMovies = async (query: string | null = null) => {
+const filteredMovies = computed(() => {
+  if (!searchQuery.value) {
+    return movies.value
+  }
+  return movies.value.filter((movie) =>
+    movie.Title.toLowerCase().includes(searchQuery.value.toLowerCase()),
+  )
+})
+
+const loadMovies = async (query: string | null = null, page: number = 1) => {
   try {
     isLoading.value = true
     error.value = null
 
-    if (movieCache.value.has(query || 'popular')) {
-      movies.value = movieCache.value.get(query || 'popular')!
+    const cacheKey = `${query || ''}-page-${page}`
+    if (movieCache.value.has(cacheKey)) {
+      movies.value = movieCache.value.get(cacheKey)!
+      currentPage.value = page
       return
     }
 
-    const data = await fetchMovies(query)
-    movies.value = data
+    const data = await fetchMovies(query, page)
+    movies.value = data.movies
+    totalPages.value = data.totalPages
 
-    movieCache.value.set(query || 'popular', data)
+    movieCache.value.set(cacheKey, data.movies)
+
+    currentPage.value = page
   } catch (err: unknown) {
     if (err instanceof Error) {
       error.value = err.message
@@ -53,67 +70,48 @@ onMounted(() => {
 
   <div v-else class="movie-list">
     <MovieCard
-      v-for="movie in movies"
+      v-for="movie in filteredMovies"
       :key="movie.imdbID"
       :poster="movie.Poster"
       :title="movie.Title"
       :year="movie.Year"
-      :imdbID="movie.imdbID"
+      :imdbID="String(movie.imdbID)"
     />
+  </div>
+
+  <div v-if="!isLoading" class="pagination">
+    <button :disabled="currentPage === 1" @click="loadMovies(searchQuery, currentPage - 1)">
+      Previous
+    </button>
+
+    <span class="page-btn">Page {{ currentPage }} of {{ totalPages }}</span>
+
+    <button
+      :disabled="currentPage === totalPages"
+      @click="loadMovies(searchQuery, currentPage + 1)"
+    >
+      Next
+    </button>
   </div>
 </template>
 
 <style scoped>
 .movie-list {
   display: grid;
-  gap: 1.5rem;
-  padding: 1rem;
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.movie-card {
-  text-align: center;
-  background-color: #f4f4f4;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-}
-
-.movie-card:hover {
-  transform: scale(1.05);
-}
-
-.movie-card img {
-  max-width: 100%;
-  border-radius: 4px;
-}
-
-.movie-card h2 {
-  font-size: 1.2rem;
-  margin: 0.5rem 0;
-  color: #333;
-}
-
-.movie-card p {
-  color: #555;
-}
-
-.search-bar {
+.pagination {
   display: flex;
   justify-content: center;
-  margin: 1rem 0;
+  align-items: center;
+  margin-top: 1rem;
 }
 
-.search-bar input {
-  width: 300px;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 0.5rem;
-}
-
-.search-bar button {
+.pagination button {
   padding: 0.5rem 1rem;
+  margin: 0 1rem;
+  width: 100px;
   background-color: #2c3e50;
   color: white;
   border: none;
@@ -121,8 +119,18 @@ onMounted(() => {
   cursor: pointer;
 }
 
-.search-bar button:hover {
-  background-color: #1a242f;
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination button:hover {
+  transform: scale(1.05);
+}
+
+.pagination span {
+  margin: 0 1rem;
+  font-weight: bold;
 }
 
 .error-banner {
@@ -134,5 +142,22 @@ onMounted(() => {
   text-align: center;
   border-radius: 4px;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .movie-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .page-btn {
+    font-size: 10px;
+    width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-list {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
