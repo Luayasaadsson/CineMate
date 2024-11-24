@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ErrorBanner from '../components/ErrorBanner.vue'
+import ChatLoader from '../components/ChatLoader.vue'
 import { fetchMovieDetails } from '../services/moviesService'
 import type { MovieDetails } from '../types/Movie'
 
@@ -36,7 +37,7 @@ onMounted(() => {
 <template>
   <ErrorBanner v-if="error" :message="error" />
 
-  <div v-if="isLoading">Loading movie details...</div>
+  <ChatLoader v-if="isLoading" />
 
   <div v-else-if="movie" class="movie-details">
     <div class="movie-poster">

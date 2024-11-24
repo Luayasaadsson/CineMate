@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import SearchBar from '../components/SearchBar.vue'
 import MovieCard from '../components/MovieCard.vue'
 import ErrorBanner from '../components/ErrorBanner.vue'
+import ChatLoader from '../components/ChatLoader.vue'
 import { fetchMovies } from '../services/moviesService'
 import type { Movie } from '../types/Movie'
 
@@ -66,7 +67,7 @@ onMounted(() => {
 
   <ErrorBanner v-if="error" :message="error" />
 
-  <div v-if="isLoading">Loading movies...</div>
+  <ChatLoader v-if="isLoading" />
 
   <div v-else class="movie-list">
     <MovieCard
