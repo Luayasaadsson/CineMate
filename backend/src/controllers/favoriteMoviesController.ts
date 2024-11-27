@@ -5,7 +5,6 @@ import { AuthenticatedRequest } from '../middleware/authMiddleware'
 
 export const addFavorite = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const { imdbID, title, year, genre, plot, poster } = req.body
-  console.log('Request body:', req.body)
   const userId = req.user?.userId
 
   try {

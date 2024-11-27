@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../store/authStore'
-import ErrorBanner from '../components/ErrorBanner.vue'
+import ErrorBanner from './ErrorBanner.vue'
 
 const isLoginMode = ref(true) 
 const email = ref('')
