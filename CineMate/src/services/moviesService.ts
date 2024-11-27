@@ -24,10 +24,12 @@ export const fetchMovies = async (
   if (data.results && Array.isArray(data.results)) {
     return {
       movies: data.results.map((movie: TMDBMovie) => ({
-        imdbID: movie.id,
-        Title: movie.title,
-        Year: movie.release_date?.split('-')[0] || 'N/A',
-        Poster: movie.poster_path
+        imdbID: String(movie.id),
+        title: movie.title,
+        year: movie.release_date?.split('-')[0] || 'N/A',
+        genre: movie.genre || 'N/A',
+        plot: movie.plot || 'No plot available',
+        poster: movie.poster_path
           ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
           : 'https://via.placeholder.com/500x750?text=No+Image',
       })),
@@ -45,13 +47,13 @@ export const fetchMovieDetails = async (id: string): Promise<MovieDetails> => {
   if (data && data.title) {
     return {
       imdbID: data.id,
-      Title: data.title,
-      Year: data.release_date?.split('-')[0] || 'N/A',
-      Poster: data.poster_path
+      title: data.title,
+      year: data.release_date?.split('-')[0] || 'N/A',
+      poster: data.poster_path
         ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
         : 'https://via.placeholder.com/500x750?text=No+Image',
-      Genre: data.genres.map((genre) => genre.name).join(', '),
-      Plot: data.overview || 'No plot available',
+      genre: data.genres.map((genre) => genre.name).join(', ') || 'Unknown',
+      plot: data.overview || 'No plot available',
     }
   } else {
     throw new Error('Movie not found!')

@@ -1,18 +1,22 @@
 export interface Movie {
   imdbID: string
-  Title: string
-  Year: string
-  Poster: string
+  title: string
+  year: string
+  genre: string
+  plot: string
+  poster: string
 }
 
 export interface MovieDetails extends Movie {
-  Genre: string
-  Plot: string
+  genre: string
+  plot: string
 }
 
 export interface TMDBMovie {
   id: string
   title: string
+  genre: string
+  plot: string
   release_date: string
   poster_path: string | null
 }

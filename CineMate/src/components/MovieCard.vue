@@ -22,9 +22,6 @@ defineProps<{
   padding: 1rem;
   transition: transform 0.3s ease;
   text-align: center;
-  width: 100%;
-  margin: auto;
-  margin-bottom: 1rem;
 }
 
 .movie-card:hover {

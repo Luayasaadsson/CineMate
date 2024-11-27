@@ -21,7 +21,7 @@ const filteredMovies = computed(() => {
     return movies.value
   }
   return movies.value.filter((movie) =>
-    movie.Title.toLowerCase().includes(searchQuery.value.toLowerCase()),
+    movie.title.toLowerCase().includes(searchQuery.value.toLowerCase()),
   )
 })
 
@@ -61,8 +61,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>Search Movies</h1>
-
   <SearchBar v-model:searchQuery="searchQuery" @search="loadMovies" />
 
   <ErrorBanner v-if="error" :message="error" />
@@ -70,16 +68,17 @@ onMounted(() => {
   <ChatLoader v-if="isLoading" />
 
   <div v-else class="movie-list">
-    <MovieCard
-      v-for="movie in filteredMovies"
-      :key="movie.imdbID"
-      :poster="movie.Poster"
-      :title="movie.Title"
-      :year="movie.Year"
-      :imdbID="String(movie.imdbID)"
-    />
+    <div v-for="movie in filteredMovies" :key="movie.imdbID">
+      <RouterLink :to="`/movie/${movie.imdbID}`">
+        <MovieCard
+          :poster="movie.poster"
+          :title="movie.title"
+          :year="movie.year"
+          :imdbID="movie.imdbID"
+        />
+      </RouterLink>
+    </div>
   </div>
-
   <div v-if="!isLoading" class="pagination">
     <button :disabled="currentPage === 1" @click="loadMovies(searchQuery, currentPage - 1)">
       Previous

@@ -10,13 +10,16 @@ defineProps<{ message: string }>()
 
 <style scoped>
 .error-banner {
-  background-color: #ffdddd;
-  color: #d8000c;
-  border: 1px solid #d8000c;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  color: var(--vt-c-white);
+  font-size: 1.2rem;
+  margin: 10px;
   text-align: center;
-  border-radius: 4px;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .error-banner {
+    font-size: 1rem;
+  }
 }
 </style>
