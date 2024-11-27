@@ -1,12 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/auth/:path*",
-      "destination": "https://cine-mate-lac.vercel.app/auth/:path*"
-    },
-    {
-      "source": "/favorites/:path*",
-      "destination": "https://cine-mate-lac.vercel.app/favorites/:path*"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
