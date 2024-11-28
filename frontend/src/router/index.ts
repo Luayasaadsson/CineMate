@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import FavoritesMovies from '../views/FavoritesMovies.vue'
 import MovieDetails from '../views/MovieDetails.vue'
 import AuthForm from '@/components/AuthForm.vue'
+import NotFound from '../views/NotFound.vue'
 import { useAuthStore } from '../store/authStore'
 
 const routes = [
@@ -28,6 +29,11 @@ const routes = [
     name: 'MovieDetails',
     component: MovieDetails,
     props: true,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound,
   },
 ]
 
