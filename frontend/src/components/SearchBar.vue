@@ -50,7 +50,7 @@ const handleSearch = () => {
 
 .search-bar button {
   padding: 0.5rem 1.5rem;
-  background-color: #2c3e50;
+  background: linear-gradient(45deg, #3a6186, #89253e);
   color: white;
   border: none;
   border-left: none;

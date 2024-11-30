@@ -84,7 +84,7 @@ onMounted(() => {
       Previous
     </button>
 
-    <span class="page-btn">Page {{ currentPage }} of {{ totalPages }}</span>
+    <span class="page">Page {{ currentPage }} of {{ totalPages }}</span>
 
     <button
       :disabled="currentPage === totalPages"
@@ -109,13 +109,14 @@ onMounted(() => {
 }
 
 .pagination button {
+  font-size: 1rem ;
   padding: 0.5rem 1rem;
   margin: 0 1rem;
   width: 100px;
-  background-color: #2c3e50;
+  background: linear-gradient(45deg, #3a6186, #89253e);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
@@ -133,24 +134,17 @@ onMounted(() => {
   font-weight: bold;
 }
 
-.error-banner {
-  background-color: #ffdddd;
-  color: #d8000c;
-  border: 1px solid #d8000c;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  border-radius: 4px;
-  font-weight: bold;
-}
-
 @media (max-width: 768px) {
   .movie-list {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .page-btn {
-    font-size: 10px;
+  .pagination button {
+    font-size: 0.8rem;
+  }
+
+  .page {
+    font-size: 0.7rem;
     width: 200px;
   }
 }

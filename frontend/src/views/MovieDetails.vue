@@ -4,6 +4,7 @@ import ErrorBanner from '../components/ErrorBanner.vue'
 import ChatLoader from '../components/ChatLoader.vue'
 import { fetchMovieDetails } from '../services/moviesService'
 import type { MovieDetails } from '../types/Movie'
+import BaseButton from '../components/BaseButton.vue'
 import { useFavoriteMoviesStore } from '../store/favoriteMoviesStore'
 import type { Movie } from '../types/Movie'
 
@@ -45,7 +46,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <button @click="$router.push('/')" class="back-btn">Go back</button>
+  <BaseButton to="/">Go back</BaseButton>
 
   <ErrorBanner v-if="error" :message="error" />
 
@@ -53,7 +54,7 @@ onMounted(() => {
 
   <div v-else-if="movie" class="movie-details">
     <div class="movie-poster">
-      <img :src="movie.poster" :alt="movie.title" />
+      <img :src="movie.poster" :alt="movie.title" loading="lazy" />
     </div>
     <div class="movie-info">
       <h1>{{ movie.title }}</h1>
@@ -82,7 +83,7 @@ onMounted(() => {
 
 .add-btn {
   padding: 0.5rem 1rem;
-  background-color: #2c3e50;
+  background: linear-gradient(45deg, #3a6186, #89253e);
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -97,28 +98,12 @@ onMounted(() => {
 .movie-info h1 {
   font-size: 2rem;
   margin-bottom: 1rem;
-  color: #fff;
 }
 
 .movie-info p {
   font-size: 1.8rem;
-  color: #fff;
   margin: 0.5rem 0;
   max-width: 60rem;
-}
-
-.back-btn {
-  display: block;
-  padding: 0.5rem 1rem;
-  background-color: #2c3e50;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.back-btn:hover {
-  background-color: #1a242f;
 }
 
 .home-button:hover {

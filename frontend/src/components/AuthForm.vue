@@ -116,7 +116,7 @@ button:hover {
   text-align: center;
   margin-top: 1rem;
   font-size: 0.9rem;
-  color: #2c3e50;
+  color: var(--color-text-dark);
   cursor: pointer;
 }
 

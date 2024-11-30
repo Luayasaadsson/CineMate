@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <router-link :to="`/movie/${imdbID}`" class="movie-card">
-    <img :src="poster" :alt="title" />
+    <img :src="poster" :alt="title" loading="lazy"/>
     <h2>{{ title }}</h2>
     <p>{{ year }}</p>
   </router-link>
@@ -37,13 +37,12 @@ defineProps<{
 .movie-card h2 {
   font-size: 1.2rem;
   margin: 0.5rem 0;
-  color: var(--vt-c-white);
-  text-decoration: underline;
+  color: var(--color-text); 
 }
 
 .movie-card p {
-  color: var(--vt-c-white);
-  text-decoration: underline;
+  font-size: 0.9rem;
+  color: var(--color-text); 
 }
 
 @media (max-width: 768px) {

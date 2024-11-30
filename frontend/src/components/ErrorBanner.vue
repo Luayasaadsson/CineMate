@@ -10,7 +10,7 @@ defineProps<{ message: string }>()
 
 <style scoped>
 .error-banner {
-  color: var(--vt-c-white);
+  color: var(--color-text-dark);
   font-size: 1.2rem;
   margin: 10px;
   text-align: center;

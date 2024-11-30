@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-import { useFavoriteMoviesStore } from '../store/favoriteMoviesStore'
 import { computed } from 'vue'
+import { TrashIcon } from '@heroicons/vue/24/solid'
+import { useFavoriteMoviesStore } from '../store/favoriteMoviesStore'
+import BaseButton from '../components/BaseButton.vue'
 
 const favoriteStore = useFavoriteMoviesStore()
 const favorites = computed(() => favoriteStore.favorites)
@@ -11,6 +13,7 @@ const removeFavorite = (imdbID: string) => {
 </script>
 
 <template>
+  <BaseButton to="/">Go back</BaseButton>
   <div>
     <h1>Your Favorite Movies</h1>
     <div v-if="favorites.length === 0">
@@ -18,10 +21,16 @@ const removeFavorite = (imdbID: string) => {
     </div>
     <div v-else class="movie-list">
       <div v-for="movie in favorites" :key="movie.imdbID" class="movie-card">
-        <img :src="movie.poster" :alt="movie.title" />
+        <img :src="movie.poster" :alt="movie.title" loading="lazy" />
         <h2>{{ movie.title }}</h2>
         <p>{{ movie.year }}</p>
-        <button @click="removeFavorite(movie.imdbID)">Remove</button>
+        <button
+          class="remove-button"
+          @click="removeFavorite(movie.imdbID)"
+          aria-label="Remove {{ movie.title }} from favorites"
+        >
+          <TrashIcon class="icon" />
+        </button>
       </div>
     </div>
   </div>
@@ -35,17 +44,24 @@ const removeFavorite = (imdbID: string) => {
   gap: 1rem;
 }
 
-h1 {
+h1,
+p {
   color: var(--vt-c-white-soft);
   margin-bottom: 10px;
   text-align: center;
 }
 
 .movie-card {
+  position: relative;
   padding: 1rem;
   color: white;
   border-radius: 8px;
   text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
 }
 
 .movie-card img {
@@ -53,17 +69,42 @@ h1 {
   border-radius: 8px;
 }
 
-.movie-card button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background: #d9534f;
+.remove-button {
+  position: absolute;
+  top: 30px;
+  right: 120px;
+  background: none;
   border: none;
-  border-radius: 4px;
   color: white;
   cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.movie-card button:hover {
-  background: #95342f;
+.movie-card:hover .remove-button {
+  opacity: 1;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+}
+
+.remove-button:hover .icon {
+  transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+  .movie-card h2 {
+    font-size: 0.8rem;
+  }
+  .movie-card p {
+    font-size: 0.7rem;
+  }
+  .remove-button {
+    top: 30px;
+    right: 80px;
+  }
 }
 </style>
