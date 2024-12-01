@@ -3,6 +3,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import { useAuthStore } from './store/authStore'
 import { computed, ref, provide, onMounted } from 'vue'
 import ThemeToggleButton from './components/ThemeToggleButton.vue'
+import HamburgerMenu from './components/HamburgerMenu.vue'
 import router from './router'
 
 const theme = ref(localStorage.getItem('theme') || 'dark')
@@ -39,9 +40,12 @@ const handleLogout = () => {
 
         <span class="spacer"></span>
 
-        <RouterLink to="/favorites">Favorites</RouterLink>
-        <button @click="handleLogout" class="logout-btn">Logout</button>
-        <ThemeToggleButton />
+        <div class="desktop-nav">
+          <RouterLink to="/favorites">Favorites</RouterLink>
+          <button @click="handleLogout" class="logout-btn">Logout</button>
+          <ThemeToggleButton />
+        </div>
+        <HamburgerMenu />
       </nav>
     </header>
 
@@ -69,6 +73,12 @@ nav {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .spacer {
@@ -116,5 +126,11 @@ nav a:hover {
 
 main {
   padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
 }
 </style>

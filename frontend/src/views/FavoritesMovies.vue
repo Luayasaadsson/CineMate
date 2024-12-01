@@ -46,15 +46,14 @@ const removeFavorite = (imdbID: string) => {
 
 h1,
 p {
-  color: var(--vt-c-white-soft);
-  margin-bottom: 10px;
+  margin: 10px;
   text-align: center;
 }
 
 .movie-card {
   position: relative;
   padding: 1rem;
-  color: white;
+  color: var(--color-text);
   border-radius: 8px;
   text-align: center;
   transition: transform 0.3s ease;
