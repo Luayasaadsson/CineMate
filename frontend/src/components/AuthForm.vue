@@ -99,9 +99,10 @@ input {
 
 button {
   padding: 0.5rem;
-  background-color: #2c3e50;
+  background: linear-gradient(45deg, #89253e, #3a6186);
   color: white;
   font-size: 1rem;
+  font-weight: bold;
   border: none;
   border-radius: 4px;
   cursor: pointer;
