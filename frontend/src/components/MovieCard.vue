@@ -4,11 +4,12 @@ defineProps<{
   title: string
   year: string
   imdbID: string
+  currentPage: number
 }>()
 </script>
 
 <template>
-  <router-link :to="`/movie/${imdbID}`" class="movie-card">
+  <router-link :to="`/movie/${imdbID}?page=${currentPage}`" class="movie-card">
     <img :src="poster" :alt="title" loading="lazy"/>
     <h2>{{ title }}</h2>
     <p>{{ year }}</p>

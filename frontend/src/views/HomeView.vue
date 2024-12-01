@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import SearchBar from '../components/SearchBar.vue'
 import MovieCard from '../components/MovieCard.vue'
 import ErrorBanner from '../components/ErrorBanner.vue'
@@ -7,10 +8,11 @@ import ChatLoader from '../components/ChatLoader.vue'
 import { fetchMovies } from '../services/moviesService'
 import type { Movie } from '../types/Movie'
 
+const route = useRoute()
 const searchQuery = ref('')
 const movies = ref<Movie[]>([])
 const movieCache = ref(new Map<string, Movie[]>())
-const currentPage = ref(1)
+const currentPage = ref(parseInt(route.query.page as string) || 1)
 const totalPages = ref(1)
 
 const isLoading = ref(true)
@@ -56,8 +58,16 @@ const loadMovies = async (query: string | null = null, page: number = 1) => {
 }
 
 onMounted(() => {
-  loadMovies()
+  loadMovies(searchQuery.value, currentPage.value)
 })
+
+watch(
+  () => route.query.page,
+  (newPage) => {
+    const page = parseInt(newPage as string) || 1
+    loadMovies(searchQuery.value, page)
+  },
+)
 </script>
 
 <template>
@@ -75,6 +85,7 @@ onMounted(() => {
           :title="movie.title"
           :year="movie.year"
           :imdbID="movie.imdbID"
+          :currentPage="currentPage"
         />
       </RouterLink>
     </div>
@@ -109,10 +120,9 @@ onMounted(() => {
 }
 
 .pagination button {
-  font-size: 1rem ;
+  font-size: 1rem;
   padding: 0.5rem 1rem;
   margin: 0 1rem;
-  width: 100px;
   background: linear-gradient(45deg, #3a6186, #89253e);
   color: white;
   border: none;
@@ -121,7 +131,6 @@ onMounted(() => {
 }
 
 .pagination button:disabled {
-  background-color: #ccc;
   cursor: not-allowed;
 }
 
@@ -130,7 +139,6 @@ onMounted(() => {
 }
 
 .pagination span {
-  margin: 0 1rem;
   font-weight: bold;
 }
 
@@ -145,7 +153,6 @@ onMounted(() => {
 
   .page {
     font-size: 0.7rem;
-    width: 200px;
   }
 }
 

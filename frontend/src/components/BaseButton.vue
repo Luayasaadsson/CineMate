@@ -1,14 +1,8 @@
-<template>
-  <button @click="handleClick" class="back-btn">
-    <slot>Go back</slot>
-  </button>
-</template>
-
 <script lang="ts" setup>
-import { useRouter } from 'vue-router'
-import { defineProps } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
 
 const props = defineProps({
   to: {
@@ -18,9 +12,18 @@ const props = defineProps({
 })
 
 const handleClick = () => {
-  router.push(props.to)
+  router.push({
+    path: props.to,
+    query: { ...route.query, page: route.query.page || 1 },
+  })
 }
 </script>
+
+<template>
+  <button @click="handleClick" class="back-btn">
+    <slot>Go back</slot>
+  </button>
+</template>
 
 <style scoped>
 .back-btn {
