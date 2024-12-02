@@ -19,14 +19,16 @@ const toggleTheme = () => {
 provide('theme', theme)
 provide('toggleTheme', toggleTheme)
 
-onMounted(() => {
-  document.body.classList.add(`theme-${theme.value}`)
-})
-
 const handleLogout = () => {
   authStore.logout()
   router.push('/auth')
 }
+
+provide('handleLogout', handleLogout)
+
+onMounted(() => {
+  document.body.classList.add(`theme-${theme.value}`)
+})
 </script>
 
 <template>
@@ -82,7 +84,7 @@ nav {
 }
 
 .spacer {
-  flex-grow: 1; 
+  flex-grow: 1;
 }
 
 nav a {
@@ -93,11 +95,11 @@ nav a {
 }
 
 nav a:hover {
-  transform: scale(1.10);
+  transform: scale(1.1);
 }
 
 .brand {
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
@@ -121,7 +123,7 @@ nav a:hover {
 }
 
 .logout-btn:hover {
-  transform: scale(1.10);;
+  transform: scale(1.1);
 }
 
 main {

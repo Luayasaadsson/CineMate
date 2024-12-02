@@ -11,10 +11,11 @@ defineProps<{ message: string }>()
 <style scoped>
 .error-banner {
   color: var(--color-text-dark);
-  font-size: 1.2rem;
-  margin: 10px;
   text-align: center;
-  font-weight: bold;
+}
+
+.error-banner:has(p) {
+  font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {

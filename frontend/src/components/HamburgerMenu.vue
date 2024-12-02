@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref, inject, onMounted, onUnmounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import { ref, inject, onMounted, onUnmounted } from 'vue'
 import ThemeToggleButton from './ThemeToggleButton.vue'
 
 type ThemeType = 'dark' | 'light'
 
 const isMenuOpen = ref(false)
 const theme = inject<ThemeType>('theme', 'dark')
+
+const handleLogout = inject('handleLogout') as () => void
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
@@ -52,8 +54,9 @@ onUnmounted(() => {
             : 'linear-gradient(45deg, #3a6186, #89253e)',
       }"
     >
+      <RouterLink @click="toggleMenu" to="/">Home</RouterLink>
       <RouterLink @click="toggleMenu" to="/favorites">Favorites</RouterLink>
-      <button class="logout-btn" @click="toggleMenu">Logout</button>
+      <button class="logout-btn" @click="handleLogout">Logout</button>
       <ThemeToggleButton />
     </nav>
   </div>

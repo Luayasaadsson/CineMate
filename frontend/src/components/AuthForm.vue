@@ -4,10 +4,10 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../store/authStore'
 import ErrorBanner from './ErrorBanner.vue'
 
-const isLoginMode = ref(true) 
+const isLoginMode = ref(true)
 const email = ref('')
 const password = ref('')
-const name = ref('') 
+const name = ref('')
 const errorMessage = ref('')
 const router = useRouter()
 const authStore = useAuthStore()
@@ -16,10 +16,8 @@ const handleSubmit = async () => {
   errorMessage.value = ''
   try {
     if (isLoginMode.value) {
-
       await authStore.login(email.value, password.value)
     } else {
-
       await authStore.register(name.value, email.value, password.value)
       await authStore.login(email.value, password.value)
     }
@@ -37,23 +35,12 @@ const handleSubmit = async () => {
   <div class="form-container">
     <div>
       <h1 class="form-title">{{ isLoginMode ? 'Login' : 'Register' }}</h1>
-      <ErrorBanner v-if="errorMessage" :message="errorMessage" />
-      <form @submit.prevent="handleSubmit">
 
-        <input
-          v-if="!isLoginMode"
-          type="text"
-          v-model="name"
-          placeholder="Name"
-          required
-        />
+      <form @submit.prevent="handleSubmit">
+        <input v-if="!isLoginMode" type="text" v-model="name" placeholder="Name" required />
         <input type="email" v-model="email" placeholder="Email" required />
-        <input
-          type="password"
-          v-model="password"
-          placeholder="Password"
-          required
-        />
+        <input type="password" v-model="password" placeholder="Password" required />
+        <ErrorBanner v-if="errorMessage" :message="errorMessage" />
         <button type="submit">{{ isLoginMode ? 'Login' : 'Register' }}</button>
       </form>
       <p class="toggle-link">
