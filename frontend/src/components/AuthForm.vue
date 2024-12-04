@@ -3,8 +3,10 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../store/authStore'
 import ErrorBanner from './ErrorBanner.vue'
+import ChatLoader from '../components/ChatLoader.vue'
 
 const isLoginMode = ref(true)
+const isLoading = ref(false)
 const email = ref('')
 const password = ref('')
 const name = ref('')
@@ -14,6 +16,7 @@ const authStore = useAuthStore()
 
 const handleSubmit = async () => {
   errorMessage.value = ''
+  isLoading.value = true
   try {
     if (isLoginMode.value) {
       await authStore.login(email.value, password.value)
@@ -27,11 +30,14 @@ const handleSubmit = async () => {
     errorMessage.value = isLoginMode.value
       ? 'Invalid email or password. Please try again.'
       : 'Registration failed. Please try again.'
+  } finally {
+    isLoading.value = false
   }
 }
 </script>
 
 <template>
+  <ChatLoader v-if="isLoading" />
   <div class="form-container">
     <div>
       <h1 class="form-title">{{ isLoginMode ? 'Login' : 'Register' }}</h1>
