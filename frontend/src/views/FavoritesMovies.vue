@@ -13,7 +13,7 @@ const removeFavorite = (imdbID: string) => {
 </script>
 
 <template>
-  <BaseButton to="/">Go back</BaseButton>
+  <BaseButton to="/home">Go back</BaseButton>
   <div>
     <h1>Your Favorite Movies</h1>
     <div v-if="favorites.length === 0">

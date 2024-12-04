@@ -1,21 +1,19 @@
 <script lang="ts" setup>
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const route = useRoute()
 
 const props = defineProps({
   to: {
     type: String,
-    default: '/',
+    default: null,
   },
 })
 
 const handleClick = () => {
-  router.push({
-    path: props.to,
-    query: { ...route.query, page: route.query.page || 1 },
-  })
+  if (props.to) {
+    router.push(props.to)
+  }
 }
 </script>
 
@@ -25,7 +23,7 @@ const handleClick = () => {
   </button>
 </template>
 
-<style scoped>
+<style>
 .back-btn {
   display: block;
   padding: 0.5rem 1rem;
@@ -34,6 +32,7 @@ const handleClick = () => {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .back-btn:hover {

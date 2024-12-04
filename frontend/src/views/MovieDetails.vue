@@ -46,7 +46,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <BaseButton to="/">Go back</BaseButton>
+  <BaseButton to="/home">Go back</BaseButton>
 
   <ErrorBanner v-if="error" :message="error" />
 

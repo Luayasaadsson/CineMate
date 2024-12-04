@@ -4,16 +4,22 @@ import FavoritesMovies from '../views/FavoritesMovies.vue'
 import MovieDetails from '../views/MovieDetails.vue'
 import AuthForm from '@/components/AuthForm.vue'
 import NotFound from '../views/NotFound.vue'
+import WelcomeView from '../views/WelcomeView.vue'
 import { useAuthStore } from '../store/authStore'
 
 const routes = [
+  {
+    path: '/',
+    name: 'Welcome',
+    component: WelcomeView,
+  },
   {
     path: '/auth',
     name: 'Auth',
     component: AuthForm,
   },
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: HomeView,
     meta: { requiresAuth: true },

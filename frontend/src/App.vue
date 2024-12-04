@@ -35,7 +35,7 @@ onMounted(() => {
   <div :class="`theme-${theme}`" id="app">
     <header v-if="isLoggedIn">
       <nav class="nav">
-        <RouterLink to="/" class="brand">
+        <RouterLink to="/home" class="brand">
           <span class="cine">Cine</span>
           <span class="mate">Mate</span>
         </RouterLink>

@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../store/authStore'
 import ErrorBanner from './ErrorBanner.vue'
 import ChatLoader from '../components/ChatLoader.vue'
+import BaseButton from '../components/BaseButton.vue'
 
 const isLoginMode = ref(true)
 const isLoading = ref(false)
@@ -24,7 +25,7 @@ const handleSubmit = async () => {
       await authStore.register(name.value, email.value, password.value)
       await authStore.login(email.value, password.value)
     }
-    router.push('/')
+    router.push('/home')
   } catch (error) {
     console.error(error)
     errorMessage.value = isLoginMode.value
@@ -37,6 +38,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
+  <BaseButton to="/">Go back</BaseButton>
   <ChatLoader v-if="isLoading" />
   <div class="form-container">
     <div>
